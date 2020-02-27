@@ -1,0 +1,85 @@
+body {
+  background: #e3d5b3;
+  width: 300px;
+}
+
+.functionGroup {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px;
+  text-align: center;
+  background: #f4e4bc;
+}
+
+.farmButtonDiv {
+  margin-top: 3px;
+}
+
+.farmButton {
+  height: 24px;
+  width: 24px;
+  background-image: url(https://dsbr.innogamescdn.com/asset/3b2f093/graphic/map/icons_context.png);
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.farmButtonA {
+  background-position: -264px 0px;
+}
+.farmButtonA:hover {
+  background-position: -264px -24px;
+}
+
+.farmButtonB {
+  background-position: -288px 0px;
+}
+.farmButtonB:hover {
+  background-position: -288px -24px;
+}
+
+.twButton {
+  display: inline-block;
+  padding: 3px;
+  margin: 0 2px;
+  text-align: center;
+  font-family: Verdana, Arial;
+  font-size: 12px !important;
+  font-weight: bold;
+  line-height: normal;
+  cursor: pointer;
+  background: #6c4824;
+  background: linear-gradient(
+    to bottom,
+    #947a62 0%,
+    #7b5c3d 22%,
+    #6c4824 30%,
+    #6c4824 100%
+  );
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  color: #fff;
+  white-space: nowrap;
+  width: 100%;
+  margin-top: 3px;
+  margin-bottom: 2px;
+}
+
+.twButton:hover {
+  background: #e2a738;
+  background: linear-gradient(
+    to bottom,
+    #b69471 0%,
+    #9f764d 22%,
+    #8f6133 30%,
+    #6c4d2d 100%
+  );
+  color: #fff;
+  text-decoration: none;
+}
+
+input {
+  width: 90%;
+  margin: auto;
+}

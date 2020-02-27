@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TW Scripts</title>
+    <script type="text/javascript" src="events.js"></script>
+    <link rel="stylesheet" type="text/css" href="popup.css" />
+  </head>
+  <body>
+    <div class="functionGroup">
+      <b>Farm</b>
+      <div class="farmButtonDiv">
+        <button class="farmButton farmButtonA" id="farmA"></button>
+        <button class="farmButton farmButtonB" id="farmB"></button>
+      </div>
+      <br />
+      *Pagina: Assistente de saques
+    </div>
+    <br />
+    <div class="functionGroup">
+      <b>Agenda de Ataque/Apoio</b>
+      <br />
+      <br />
+      Delay(ms)
+      <br />
+      <input type="number" id="schedulerDelay" /><br />
+      <br />
+      Data/hora de chegada do ataque
+      <br />
+      <input type="datetime-local" id="schedulerTime" />
+      <button class="twButton" id="schedulerGo">Agendar ataque/apoio</button>
+      *Pagina: Confirmacao de ataque
+    </div>
+    <br />
+    <div class="functionGroup">
+      <b>Snip por cancelamento/milicia</b>
+      <br />
+      <br />
+      Tempo para ida/volta do ataque (s)
+      <br />
+      <input type="number" id="snipTotalTime" /><br />
+      Delay(ms)
+      <br />
+      <input type="number" id="snipDelay" /><br />
+      Hora de chegada do ataque
+      <br />
+      <input type="datetime-local" id="snipAtackTime" step="1" />
+      Ajuste(ms)
+      <br />
+      <input type="number" id="snipMsAdjust" /><br />
+      <button class="twButton" id="snipSend">Envia ataque</button>
+      *Pagina: Confirmacao de ataque
+      <button class="twButton" id="snipReturn">Retorna ataque</button>
+      *Pagina: Dados do ataque
+      <button class="twButton" id="snipMilitia">Snipa com milicia mesmo</button>
+      *Pagina: Pagina da fazenda
+    </div>
+  </body>
+</html>
