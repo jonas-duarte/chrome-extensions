@@ -1,44 +1,59 @@
-// const saqueAldeias = (villages, buttonClicked) => {
-//   if (!villages || villages.length === 0) {
-//     if (buttonClicked) saqueAldeias($(".row_a , .row_b"), false);
-//     return;
-//   }
-//   villages = $(villages);
-//   const village = $(villages[0]);
-//   villages = villages.toArray();
-//   villages.shift();
-//   const img = $(village.children()[1])
-//     .children()
-//     .attr("src");
-//   const muralha = $(village.children()[6]).text();
-//   const botao = $(village.children()[8]).children()[0];
-//   if (
-//     (img.includes("green") && muralha === "?") ||
-//     muralha == "0" ||
-//     muralha == "1"
-//   ) {
-//     botao.click();
-//     setTimeout(() => {
-//       saqueAldeias(villages, true);
-//     }, 200);
-//   } else {
-//     saqueAldeias(villages, buttonClicked);
-//   }
-// };
+function distanceBetweenVillages(origem, destino) {
+  if (!(origem && destino)) {
+    return;
+  }
+  var ori = origem.split("|");
+  var des = destino.split("|");
 
-//saqueAldeias($(".row_a , .row_b"));
+  var x = ori[0] - des[0];
+  var y = ori[1] - des[1];
 
-// setTimeout(() => {
-//   location.reload();
-// }, 5000);
+  var distance = Math.sqrt(x * x + y * y);
 
-// new Date("2020-02-26 11:40:38");
+  return distance;
+}
 
-// function computeMs(date) {
-//   const currentDate = new Date();
-//   return date - currentDate;
-// }
+function runEverySecond() {
+  if (
+    $ != undefined &&
+    $("#show_outgoing_units")
+      .find("table")
+      .find("th").length <= 3
+  ) {
+    $("#show_outgoing_units")
+      .find("table")
+      .find("th")
+      .eq(2);
 
-// setTimeout(() => {
-//   $(".troop_confirm_go").click();
-// }, computeMs(new Date("2020-02-26 11:40:38")));
+    var myCord = $($(".box-item").get(1))
+      .children()
+      .text()
+      .match(/\(([0-9][0-9][0-9][|][0-9][0-9][0-9])\)/)[1];
+
+    $("#show_outgoing_units")
+      .find("table")
+      .find("th")
+      .eq(2)
+      .after("<th>Distância</th>");
+
+    $("#show_outgoing_units")
+      .find("table")
+      .find("tr")
+      .each(function() {
+        const td = $(this).find("td");
+        let cord = td
+          .eq(0)
+          .text()
+          .match(/\(([0-9][0-9][0-9][|][0-9][0-9][0-9])\)/);
+        if (cord) {
+          cord = cord[1];
+          td.eq(2).after(
+            "<td>" + distanceBetweenVillages(myCord, cord) + "</td>"
+          );
+        }
+      });
+  }
+  setTimeout(runEverySecond, 1000);
+}
+
+runEverySecond();

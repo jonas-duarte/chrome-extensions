@@ -184,5 +184,6 @@ document.addEventListener("DOMContentLoaded", function() {
   /** Save button */
   document.getElementById("saveButton").addEventListener("click", function() {
     setState();
+    alert("Configuracoes salvas!!!");
   });
 });
