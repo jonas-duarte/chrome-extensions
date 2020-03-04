@@ -177,4 +177,8 @@ document.addEventListener("DOMContentLoaded", function() {
       file: "snip.js"
     });
   });
+  /** Save button */
+  document.getElementById("saveButton").addEventListener("click", function() {
+    setState();
+  });
 });

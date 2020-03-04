@@ -5,12 +5,19 @@
     <script type="text/javascript" src="events.js"></script>
     <link rel="stylesheet" type="text/css" href="popup.css" />
     <script type="text/javascript" src="popup.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
     <div class="navbar">
       <button id="farmCollapse">Farm</button
       ><button id="schedulerCollapse">Agendador</button
-      ><button id="snipCollapse">Snip</button>
+      ><button id="snipCollapse">Snip</button
+      ><button id="saveButton">
+        <i class="fa fa-save"></i>
+      </button>
     </div>
     <div id="farmGroup" class="function-group">
       <b>Farm</b><br /><br />
@@ -64,7 +71,7 @@
       *Pagina: Confirmacao de ataque
     </div>
     <div id="snipGroup" class="function-group">
-      <b>Snip por cancelamento/milicia</b>
+      <b>Snip por cancelamento</b>
       <br />
       <br />
       Tempo para ida/volta do comando (s)

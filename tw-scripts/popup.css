@@ -14,17 +14,19 @@ body {
 
 .navbar > button {
   cursor: pointer;
-  width: 33%;
+  width: 30%;
   padding: 0;
-  font-size: 18px;
+  font-size: 17px;
   background: transparent;
   border: none;
   border-right: 1px solid #6c4824;
 }
 
 .navbar > button:last-child {
-  width: 34%;
+  width: 10%;
   border-right: none;
+  background-color: #6c4824;
+  color: white;
 }
 
 .navbar > button:hover {
@@ -32,6 +34,7 @@ body {
 }
 
 .function-group {
+  display: none;
   border: 1px solid black;
   border-radius: 3px;
   margin: 5px;
