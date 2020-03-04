@@ -6,36 +6,61 @@
     <link rel="stylesheet" type="text/css" href="popup.css" />
   </head>
   <body>
-    <div class="functionGroup">
+    <div class="function-group">
       <b>Farm</b>
-      <div class="farmButtonDiv">
-        <button class="farmButton farmButtonA" id="farmA"></button>
-        <button class="farmButton farmButtonB" id="farmB"></button>
-      </div>
-      <br />
+      <table class="farm-table">
+        <tr>
+          <th>Verde</th>
+          <th>Amarelo</th>
+          <th>Muralha</th>
+          <th>Distancia</th>
+          <th>Enviar</th>
+        </tr>
+        <tr>
+          <td><input type="checkbox" id="farmGreenA" /></td>
+          <td><input type="checkbox" id="farmYellowA" /></td>
+          <td><input type="number" id="farmMaxWallA" /></td>
+          <td><input type="number" id="farmMaxDistanceA" /></td>
+          <td>
+            <button class="farm-button farm-button-a" id="farmA"></button>
+          </td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" id="farmGreenB" /></td>
+          <td><input type="checkbox" id="farmYellowB" /></td>
+          <td><input type="number" id="farmMaxWallB" /></td>
+          <td><input type="number" id="farmMaxDistanceB" /></td>
+          <td>
+            <button class="farm-button farm-button-b" id="farmB"></button>
+          </td>
+        </tr>
+      </table>
+
       *Pagina: Assistente de saques
     </div>
     <br />
-    <div class="functionGroup">
+    <div class="function-group">
       <b>Agenda de Ataque/Apoio</b>
       <br />
       <br />
       Delay(ms)
       <br />
       <input type="number" id="schedulerDelay" /><br />
-      <br />
       Data/hora de chegada do ataque
       <br />
-      <input type="datetime-local" id="schedulerTime" />
-      <button class="twButton" id="schedulerGo">Agendar ataque/apoio</button>
+      <input type="datetime-local" id="schedulerTime" step="1" /><br />
+      Ajuste(ms)
+      <br />
+      <input type="number" id="schedulerMsAdjust" />
+      <button class="tw-button" id="schedulerGo">Agendar ataque/apoio</button>
       *Pagina: Confirmacao de ataque
     </div>
     <br />
-    <div class="functionGroup">
+    <div class="function-group">
       <b>Snip por cancelamento/milicia</b>
       <br />
       <br />
-      Tempo para ida/volta do ataque (s)
+      Tempo para ida/volta do comando (s)
       <br />
       <input type="number" id="snipTotalTime" /><br />
       Delay(ms)
@@ -44,15 +69,13 @@
       Hora de chegada do ataque
       <br />
       <input type="datetime-local" id="snipAtackTime" step="1" />
-      Ajuste(ms)
+      Ajuste(ms) - Valores entre 100ms e 900ms
       <br />
       <input type="number" id="snipMsAdjust" /><br />
-      <button class="twButton" id="snipSend">Envia ataque</button>
+      <button class="tw-button" id="snipSend">Enviar ataque</button>
       *Pagina: Confirmacao de ataque
-      <button class="twButton" id="snipReturn">Retorna ataque</button>
+      <button class="tw-button" id="snipReturn">Retornar ataque</button>
       *Pagina: Dados do ataque
-      <button class="twButton" id="snipMilitia">Snipa com milicia mesmo</button>
-      *Pagina: Pagina da fazenda
     </div>
   </body>
 </html>

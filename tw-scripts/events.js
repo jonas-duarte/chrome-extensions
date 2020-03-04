@@ -1,6 +1,12 @@
 var state = {
-  scheduler: { delay: null, time: null },
-  farmer: { button: null },
+  scheduler: { delay: null, time: null, msAdjust: null },
+  farmer: {
+    group: [
+      { green: null, yellow: null, maxWall: null, maxDistance: null },
+      { green: null, yellow: null, maxWall: null, maxDistance: null }
+    ],
+    button: null
+  },
   snip: {
     action: null,
     delay: null,
@@ -15,7 +21,17 @@ function setState() {
   });
 
   chrome.storage.local.set({
+    farmGreenA: document.getElementById("farmGreenA").checked,
+    farmYellowA: document.getElementById("farmYellowA").checked,
+    farmMaxWallA: document.getElementById("farmMaxWallA").value,
+    farmMaxDistanceA: document.getElementById("farmMaxDistanceA").value,
+    farmGreenB: document.getElementById("farmGreenB").checked,
+    farmYellowB: document.getElementById("farmYellowB").checked,
+    farmMaxWallB: document.getElementById("farmMaxWallB").value,
+    farmMaxDistanceB: document.getElementById("farmMaxDistanceB").value,
     schedulerDelay: document.getElementById("schedulerDelay").value,
+    schedulerTime: document.getElementById("schedulerTime").value,
+    schedulerMsAdjust: document.getElementById("schedulerMsAdjust").value,
     snipDelay: document.getElementById("snipDelay").value,
     snipTotalTime: document.getElementById("snipTotalTime").value,
     snipAtackTime: document.getElementById("snipAtackTime").value,
@@ -29,20 +45,43 @@ function initialize() {
   currentDate.setUTCHours(8, 0, 0, 0);
   document.getElementById(
     "schedulerTime"
-  ).value = currentDate.toISOString().substr(0, 16);
+  ).value = currentDate.toISOString().substr(0, 19);
   document.getElementById(
     "snipAtackTime"
   ).value = currentDate.toISOString().substr(0, 19);
   chrome.storage.local.get(
     [
+      "farmGreenA",
+      "farmYellowA",
+      "farmMaxWallA",
+      "farmMaxDistanceA",
+      "farmGreenB",
+      "farmYellowB",
+      "farmMaxWallB",
+      "farmMaxDistanceB",
       "schedulerDelay",
+      "schedulerTime",
+      "schedulerMsAdjust",
       "snipDelay",
       "snipAtackTime",
       "snipTotalTime",
       "snipMsAdjust"
     ],
     result => {
+      document.getElementById("farmGreenA").checked = result.farmGreenA;
+      document.getElementById("farmYellowA").checked = result.farmYellowA;
+      document.getElementById("farmMaxWallA").value = result.farmMaxWallA;
+      document.getElementById("farmMaxDistanceA").value =
+        result.farmMaxDistanceA;
+      document.getElementById("farmGreenB").checked = result.farmGreenB;
+      document.getElementById("farmYellowB").checked = result.farmYellowB;
+      document.getElementById("farmMaxWallB").value = result.farmMaxWallB;
+      document.getElementById("farmMaxDistanceB").value =
+        result.farmMaxDistanceB;
       document.getElementById("schedulerDelay").value = result.schedulerDelay;
+      document.getElementById("schedulerTime").value = result.schedulerTime;
+      document.getElementById("schedulerMsAdjust").value =
+        result.schedulerMsAdjust;
       document.getElementById("snipDelay").value = result.snipDelay;
       document.getElementById("snipTotalTime").value = result.snipTotalTime;
       document.getElementById("snipAtackTime").value = result.snipAtackTime;
@@ -52,20 +91,42 @@ function initialize() {
   /** Snip by canceling */
 }
 
+function farmSetState(button) {
+  state.farmer.button = button;
+  state.farmer.group[0].green = document.getElementById("farmGreenA").checked;
+  state.farmer.group[0].yellow = document.getElementById("farmYellowA").checked;
+  state.farmer.group[0].maxWall = document.getElementById("farmMaxWallA").value;
+  state.farmer.group[0].maxDistance = document.getElementById(
+    "farmMaxDistanceA"
+  ).value;
+  state.farmer.group[1].green = document.getElementById("farmGreenB").checked;
+  state.farmer.group[1].yellow = document.getElementById("farmYellowB").checked;
+  state.farmer.group[1].maxWall = document.getElementById("farmMaxWallB").value;
+  state.farmer.group[1].maxDistance = document.getElementById(
+    "farmMaxDistanceB"
+  ).value;
+  setState();
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   initialize();
   /** Farm A */
   document.getElementById("farmA").addEventListener("click", function() {
-    state.farmer.button = "A";
-    setState();
+    farmSetState("A");
     chrome.tabs.executeScript({
       file: "farmer.js"
     });
   });
   /** Farm B */
   document.getElementById("farmB").addEventListener("click", function() {
-    state.farmer.button = "B";
-    setState();
+    farmSetState("B");
+    chrome.tabs.executeScript({
+      file: "farmer.js"
+    });
+  });
+  /** Farm by Filter */
+  document.getElementById("farmByFilter").addEventListener("click", function() {
+    farmSetState("byFilter");
     chrome.tabs.executeScript({
       file: "farmer.js"
     });
@@ -74,6 +135,9 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("schedulerGo").addEventListener("click", function() {
     state.scheduler.delay = document.getElementById("schedulerDelay").value;
     state.scheduler.time = document.getElementById("schedulerTime").value;
+    state.scheduler.msAdjust = document.getElementById(
+      "schedulerMsAdjust"
+    ).value;
     setState();
     chrome.tabs.executeScript({
       file: "scheduler.js"

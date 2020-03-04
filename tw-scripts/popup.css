@@ -3,7 +3,7 @@ body {
   width: 300px;
 }
 
-.functionGroup {
+.function-group {
   border: 1px solid black;
   border-radius: 3px;
   padding: 5px;
@@ -11,11 +11,19 @@ body {
   background: #f4e4bc;
 }
 
-.farmButtonDiv {
-  margin-top: 3px;
+.farm-table {
+  border-collapse: collapse;
+  width: 90%;
+  margin: auto;
+  margin-top: 5px;
 }
 
-.farmButton {
+.farm-table td,
+th {
+  border: 1px solid black;
+}
+
+.farm-button {
   height: 24px;
   width: 24px;
   background-image: url(https://dsbr.innogamescdn.com/asset/3b2f093/graphic/map/icons_context.png);
@@ -24,21 +32,21 @@ body {
   border: 0;
 }
 
-.farmButtonA {
+.farm-button-a {
   background-position: -264px 0px;
 }
-.farmButtonA:hover {
+.farm-button-a:hover {
   background-position: -264px -24px;
 }
 
-.farmButtonB {
+.farm-button-b {
   background-position: -288px 0px;
 }
-.farmButtonB:hover {
+.farm-button-b:hover {
   background-position: -288px -24px;
 }
 
-.twButton {
+.tw-button {
   display: inline-block;
   padding: 3px;
   margin: 0 2px;
@@ -66,7 +74,7 @@ body {
   margin-bottom: 2px;
 }
 
-.twButton:hover {
+.tw-button:hover {
   background: #e2a738;
   background: linear-gradient(
     to bottom,
@@ -82,4 +90,5 @@ body {
 input {
   width: 90%;
   margin: auto;
+  max-height: 100%;
 }

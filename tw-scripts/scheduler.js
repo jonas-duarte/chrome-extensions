@@ -19,7 +19,8 @@ var ms =
   new Date(state.scheduler.time) -
   new Date() -
   timeToMs(time) -
-  state.scheduler.delay;
+  parseInt(state.scheduler.delay) +
+  parseInt(state.scheduler.msAdjust);
 
 if (ms >= 0) {
   setTimeout(() => {
