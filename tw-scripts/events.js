@@ -120,6 +120,10 @@ function farmSetState(button) {
 
 document.addEventListener("DOMContentLoaded", function() {
   initialize();
+  /** Log screen */
+  chrome.tabs.executeScript({
+    file: "logScreen.js"
+  });
   /** Farm A */
   document.getElementById("farmA").addEventListener("click", function() {
     farmSetState("A");

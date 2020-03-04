@@ -1,3 +1,9 @@
+function log(message) {
+  $("#logScreen").append(
+    "<div>" + new Date().toLocaleString() + " - " + message + "</div>"
+  );
+}
+
 function timeToMs(time) {
   const t = time.split(":");
   const h = parseInt(t[0]);
@@ -27,7 +33,7 @@ if (ms >= 0) {
     $(".troop_confirm_go").click();
   }, ms);
 
-  console.log("Ataque agendado para daqui " + ms + " ms");
+  log("Ataque agendado para daqui " + ms + " ms");
 } else {
-  console.log("Não foi possivel agendar o ataque, falta tempo!!");
+  log("Não foi possivel agendar o ataque, falta tempo!!");
 }

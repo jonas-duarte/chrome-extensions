@@ -1,3 +1,9 @@
+function log(message) {
+  $("#logScreen").append(
+    "<div>" + new Date().toLocaleString() + " - " + message + "</div>"
+  );
+}
+
 var troops = [
   {
     name: "spear",
@@ -52,7 +58,7 @@ var filters =
 if (state.farmer.farmLimit) {
   let ms = new Date(state.farmer.farmLimitDate) - new Date();
   filters.maxDistance = ms > 0 ? ms / 60000 / getTroopTime() / 2 : 0;
-  console.log("Distancia maxima ajustada para " + filters.maxDistance);
+  log("Distancia maxima ajustada para " + filters.maxDistance);
 }
 
 function getTroopTime() {
