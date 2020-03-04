@@ -4,10 +4,19 @@
     <title>TW Scripts</title>
     <script type="text/javascript" src="events.js"></script>
     <link rel="stylesheet" type="text/css" href="popup.css" />
+    <script type="text/javascript" src="popup.js"></script>
   </head>
   <body>
-    <div class="function-group">
-      <b>Farm</b>
+    <div class="navbar">
+      <button id="farmCollapse">Farm</button
+      ><button id="schedulerCollapse">Agendador</button
+      ><button id="snipCollapse">Snip</button>
+    </div>
+    <div id="farmGroup" class="function-group">
+      <b>Farm</b><br /><br />
+      <input type="checkbox" id="farmLimit" /> Limite de distancia do farm pela
+      data
+      <input type="datetime-local" id="farmLimitDate" step="1" />
       <table class="farm-table">
         <tr>
           <th>Verde</th>
@@ -38,8 +47,7 @@
 
       *Pagina: Assistente de saques
     </div>
-    <br />
-    <div class="function-group">
+    <div id="schedulerGroup" class="function-group">
       <b>Agenda de Ataque/Apoio</b>
       <br />
       <br />
@@ -55,8 +63,7 @@
       <button class="tw-button" id="schedulerGo">Agendar ataque/apoio</button>
       *Pagina: Confirmacao de ataque
     </div>
-    <br />
-    <div class="function-group">
+    <div id="snipGroup" class="function-group">
       <b>Snip por cancelamento/milicia</b>
       <br />
       <br />

@@ -1,12 +1,75 @@
-function saqueAldeias(villages, button, filters, buttonClicked) {
+var troops = [
+  {
+    name: "spear",
+    time: 18,
+    quantity: [$("[name=spear]")[0].value, $("[name=spear]")[1].value]
+  },
+  {
+    name: "sword",
+    time: 22,
+    quantity: [$("[name=sword]")[0].value, $("[name=sword]")[1].value]
+  },
+  {
+    name: "axe",
+    time: 18,
+    quantity: [$("[name=axe]")[0].value, $("[name=axe]")[1].value]
+  },
+  {
+    name: "archer",
+    time: 18,
+    quantity: [$("[name=archer]")[0].value, $("[name=archer]")[1].value]
+  },
+  {
+    name: "spy",
+    time: 9,
+    quantity: [$("[name=spy]")[0].value, $("[name=spy]")[1].value]
+  },
+  {
+    name: "light",
+    time: 10,
+    quantity: [$("[name=light]")[0].value, $("[name=light]")[1].value]
+  },
+  {
+    name: "marcher",
+    time: 10,
+    quantity: [$("[name=marcher]")[0].value, $("[name=marcher]")[1].value]
+  },
+  {
+    name: "heavy",
+    time: 11,
+    quantity: [$("[name=heavy]")[0].value, $("[name=heavy]")[1].value]
+  },
+  {
+    name: "knight",
+    time: 10,
+    quantity: [$("[name=knight]")[0].value, $("[name=knight]")[1].value]
+  }
+];
+
+var filters =
+  state.farmer.button == "B" ? state.farmer.group[1] : state.farmer.group[0];
+
+if (state.farmer.farmLimit) {
+  let ms = new Date(state.farmer.farmLimitDate) - new Date();
+  filters.maxDistance = ms > 0 ? ms / 60000 / getTroopTime() / 2 : 0;
+  console.log("Distancia maxima ajustada para " + filters.maxDistance);
+}
+
+function getTroopTime() {
+  let index = state.farmer.button == "B" ? 1 : 0;
+  let slowerTime = -1;
+  troops.forEach(t => {
+    if (t.quantity[index] > 0 && t.time > slowerTime) {
+      slowerTime = t.time;
+    }
+  });
+  return slowerTime / 1.2 / 0.8;
+}
+
+function saqueAldeias(villages, buttonClicked) {
   if (!villages || villages.length === 0) {
     if (buttonClicked)
-      saqueAldeias(
-        $(".row_a:visible , .row_b:visible"),
-        button,
-        filters,
-        false
-      );
+      saqueAldeias($(".row_a:visible , .row_b:visible"), false);
     return;
   }
   villages = $(villages);
@@ -17,7 +80,9 @@ function saqueAldeias(villages, button, filters, buttonClicked) {
     .children()
     .attr("src");
   const muralha = $(village.children()[6]).text();
-  const botao = $(village.children()[button == "B" ? 9 : 8]).children()[0];
+  const botao = $(
+    village.children()[state.farmer.button == "B" ? 9 : 8]
+  ).children()[0];
   const distancia = $(village.children()[7]).text();
   if (
     ((filters.green && img.includes("green") && muralha === "?") ||
@@ -27,19 +92,11 @@ function saqueAldeias(villages, button, filters, buttonClicked) {
   ) {
     botao.click();
     setTimeout(() => {
-      saqueAldeias(villages, button, filters, true);
+      saqueAldeias(villages, true);
     }, 200);
   } else {
-    saqueAldeias(villages, button, filters, buttonClicked);
+    saqueAldeias(villages, buttonClicked);
   }
 }
 
-var filters =
-  state.farmer.button == "B" ? state.farmer.group[1] : state.farmer.group[0];
-
-saqueAldeias(
-  $(".row_a:visible , .row_b:visible"),
-  state.farmer.button,
-  filters,
-  false
-);
+saqueAldeias($(".row_a:visible , .row_b:visible"), false);

@@ -1,6 +1,8 @@
 var state = {
   scheduler: { delay: null, time: null, msAdjust: null },
   farmer: {
+    farmLimit: null,
+    farmLimitDate: null,
     group: [
       { green: null, yellow: null, maxWall: null, maxDistance: null },
       { green: null, yellow: null, maxWall: null, maxDistance: null }
@@ -21,6 +23,8 @@ function setState() {
   });
 
   chrome.storage.local.set({
+    farmLimit: document.getElementById("farmLimit").checked,
+    farmLimitDate: document.getElementById("farmLimitDate").value,
     farmGreenA: document.getElementById("farmGreenA").checked,
     farmYellowA: document.getElementById("farmYellowA").checked,
     farmMaxWallA: document.getElementById("farmMaxWallA").value,
@@ -51,6 +55,8 @@ function initialize() {
   ).value = currentDate.toISOString().substr(0, 19);
   chrome.storage.local.get(
     [
+      "farmLimit",
+      "farmLimitDate",
       "farmGreenA",
       "farmYellowA",
       "farmMaxWallA",
@@ -68,6 +74,8 @@ function initialize() {
       "snipMsAdjust"
     ],
     result => {
+      document.getElementById("farmLimit").checked = result.farmLimit;
+      document.getElementById("farmLimitDate").value = result.farmLimitDate;
       document.getElementById("farmGreenA").checked = result.farmGreenA;
       document.getElementById("farmYellowA").checked = result.farmYellowA;
       document.getElementById("farmMaxWallA").value = result.farmMaxWallA;
@@ -93,6 +101,8 @@ function initialize() {
 
 function farmSetState(button) {
   state.farmer.button = button;
+  state.farmer.farmLimit = document.getElementById("farmLimit").checked;
+  state.farmer.farmLimitDate = document.getElementById("farmLimitDate").value;
   state.farmer.group[0].green = document.getElementById("farmGreenA").checked;
   state.farmer.group[0].yellow = document.getElementById("farmYellowA").checked;
   state.farmer.group[0].maxWall = document.getElementById("farmMaxWallA").value;
@@ -124,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
       file: "farmer.js"
     });
   });
-  /** Farm by Filter */
+  /** Farm by Filter 
   document.getElementById("farmByFilter").addEventListener("click", function() {
     farmSetState("byFilter");
     chrome.tabs.executeScript({
@@ -158,18 +168,6 @@ document.addEventListener("DOMContentLoaded", function() {
   /** Snip by canceling - Return */
   document.getElementById("snipReturn").addEventListener("click", function() {
     state.snip.action = "return";
-    state.snip.delay = document.getElementById("snipDelay").value;
-    state.snip.totalTime = document.getElementById("snipTotalTime").value;
-    state.snip.atackTime = document.getElementById("snipAtackTime").value;
-    state.snip.msAdjust = document.getElementById("snipMsAdjust").value;
-    setState();
-    chrome.tabs.executeScript({
-      file: "snip.js"
-    });
-  });
-  /** Snip by canceling - Militia */
-  document.getElementById("snipMilitia").addEventListener("click", function() {
-    state.snip.action = "militia";
     state.snip.delay = document.getElementById("snipDelay").value;
     state.snip.totalTime = document.getElementById("snipTotalTime").value;
     state.snip.atackTime = document.getElementById("snipAtackTime").value;
