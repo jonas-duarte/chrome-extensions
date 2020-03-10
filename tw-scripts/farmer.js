@@ -57,8 +57,13 @@ var filters =
 
 if (state.farmer.farmLimit) {
   let ms = new Date(state.farmer.farmLimitDate) - new Date();
-  filters.maxDistance = ms > 0 ? ms / 60000 / getTroopTime() / 2 : 0;
-  log("Distancia maxima ajustada para " + filters.maxDistance);
+  let maxDistance = ms > 0 ? ms / 60000 / getTroopTime() / 2 : 0;
+  if (maxDistance < filters.maxDistance) {
+    filters.maxDistance = maxDistance;
+    log("Distancia maxima ajustada para " + filters.maxDistance);
+  } else {
+    log("Distancia maxima nao modificada");
+  }
 }
 
 function getTroopTime() {
@@ -69,7 +74,9 @@ function getTroopTime() {
       slowerTime = t.time;
     }
   });
-  return slowerTime / 1.2 / 0.8;
+  return (
+    slowerTime / parseFloat(state.worldSpeed) / parseFloat(state.troopsSpeed)
+  );
 }
 
 function saqueAldeias(villages, buttonClicked) {

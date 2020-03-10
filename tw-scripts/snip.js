@@ -7,7 +7,7 @@ function log(message) {
 switch (state.snip.action) {
   case "send":
     var msToSend =
-      new Date(state.snip.atackTime) -
+      new Date(state.snip.attackTime) -
       new Date() -
       parseInt(state.snip.totalTime) * 1000 +
       parseInt(state.snip.msAdjust) -
@@ -23,7 +23,7 @@ switch (state.snip.action) {
     break;
   case "return":
     var msToReturn =
-      new Date(state.snip.atackTime) -
+      new Date(state.snip.attackTime) -
       new Date() -
       (parseInt(state.snip.totalTime) / 2) * 1000;
     if (msToSend < 0) {

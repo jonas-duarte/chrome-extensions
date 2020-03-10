@@ -1,4 +1,8 @@
+var world = "br99";
+
 var state = {
+  worldSpeed: null,
+  troopsSpeed: null,
   scheduler: { delay: null, time: null, msAdjust: null },
   farmer: {
     farmLimit: null,
@@ -13,89 +17,81 @@ var state = {
     action: null,
     delay: null,
     totalTime: null,
-    atackTime: null,
+    attackTime: null,
     msAdjust: null
   }
 };
 function setState() {
+  state.worldSpeed = document.getElementById("worldSpeed").value;
+  state.troopsSpeed = document.getElementById("troopsSpeed").value;
   chrome.tabs.executeScript({
     code: `var state = JSON.parse('${JSON.stringify(state)}')`
   });
 
   chrome.storage.local.set({
-    farmLimit: document.getElementById("farmLimit").checked,
-    farmLimitDate: document.getElementById("farmLimitDate").value,
-    farmGreenA: document.getElementById("farmGreenA").checked,
-    farmYellowA: document.getElementById("farmYellowA").checked,
-    farmMaxWallA: document.getElementById("farmMaxWallA").value,
-    farmMaxDistanceA: document.getElementById("farmMaxDistanceA").value,
-    farmGreenB: document.getElementById("farmGreenB").checked,
-    farmYellowB: document.getElementById("farmYellowB").checked,
-    farmMaxWallB: document.getElementById("farmMaxWallB").value,
-    farmMaxDistanceB: document.getElementById("farmMaxDistanceB").value,
-    schedulerDelay: document.getElementById("schedulerDelay").value,
-    schedulerTime: document.getElementById("schedulerTime").value,
-    schedulerMsAdjust: document.getElementById("schedulerMsAdjust").value,
-    snipDelay: document.getElementById("snipDelay").value,
-    snipTotalTime: document.getElementById("snipTotalTime").value,
-    snipAtackTime: document.getElementById("snipAtackTime").value,
-    snipMsAdjust: document.getElementById("snipMsAdjust").value
+    [world]: {
+      worldSpeed: document.getElementById("worldSpeed").value,
+      troopsSpeed: document.getElementById("troopsSpeed").value,
+      farmLimit: document.getElementById("farmLimit").checked,
+      farmLimitDate: document.getElementById("farmLimitDate").value,
+      farmGreenA: document.getElementById("farmGreenA").checked,
+      farmYellowA: document.getElementById("farmYellowA").checked,
+      farmMaxWallA: document.getElementById("farmMaxWallA").value,
+      farmMaxDistanceA: document.getElementById("farmMaxDistanceA").value,
+      farmGreenB: document.getElementById("farmGreenB").checked,
+      farmYellowB: document.getElementById("farmYellowB").checked,
+      farmMaxWallB: document.getElementById("farmMaxWallB").value,
+      farmMaxDistanceB: document.getElementById("farmMaxDistanceB").value,
+      schedulerDelay: document.getElementById("schedulerDelay").value,
+      schedulerTime: document.getElementById("schedulerTime").value,
+      schedulerMsAdjust: document.getElementById("schedulerMsAdjust").value,
+      snipDelay: document.getElementById("snipDelay").value,
+      snipTotalTime: document.getElementById("snipTotalTime").value,
+      snipAttackTime: document.getElementById("snipAttackTime").value,
+      snipMsAdjust: document.getElementById("snipMsAdjust").value
+    }
   });
 }
 
 function initialize() {
-  /** Atack Scheduler */
+  /** Attack Scheduler */
   const currentDate = new Date();
   currentDate.setUTCHours(8, 0, 0, 0);
   document.getElementById(
     "schedulerTime"
   ).value = currentDate.toISOString().substr(0, 19);
   document.getElementById(
-    "snipAtackTime"
+    "snipAttackTime"
   ).value = currentDate.toISOString().substr(0, 19);
-  chrome.storage.local.get(
-    [
-      "farmLimit",
-      "farmLimitDate",
-      "farmGreenA",
-      "farmYellowA",
-      "farmMaxWallA",
-      "farmMaxDistanceA",
-      "farmGreenB",
-      "farmYellowB",
-      "farmMaxWallB",
-      "farmMaxDistanceB",
-      "schedulerDelay",
-      "schedulerTime",
-      "schedulerMsAdjust",
-      "snipDelay",
-      "snipAtackTime",
-      "snipTotalTime",
-      "snipMsAdjust"
-    ],
-    result => {
-      document.getElementById("farmLimit").checked = result.farmLimit;
-      document.getElementById("farmLimitDate").value = result.farmLimitDate;
-      document.getElementById("farmGreenA").checked = result.farmGreenA;
-      document.getElementById("farmYellowA").checked = result.farmYellowA;
-      document.getElementById("farmMaxWallA").value = result.farmMaxWallA;
-      document.getElementById("farmMaxDistanceA").value =
-        result.farmMaxDistanceA;
-      document.getElementById("farmGreenB").checked = result.farmGreenB;
-      document.getElementById("farmYellowB").checked = result.farmYellowB;
-      document.getElementById("farmMaxWallB").value = result.farmMaxWallB;
-      document.getElementById("farmMaxDistanceB").value =
-        result.farmMaxDistanceB;
-      document.getElementById("schedulerDelay").value = result.schedulerDelay;
-      document.getElementById("schedulerTime").value = result.schedulerTime;
-      document.getElementById("schedulerMsAdjust").value =
-        result.schedulerMsAdjust;
-      document.getElementById("snipDelay").value = result.snipDelay;
-      document.getElementById("snipTotalTime").value = result.snipTotalTime;
-      document.getElementById("snipAtackTime").value = result.snipAtackTime;
-      document.getElementById("snipMsAdjust").value = result.snipMsAdjust;
-    }
-  );
+  chrome.storage.local.get([world], result => {
+    document.getElementById("worldSpeed").value = result[world].worldSpeed;
+    document.getElementById("troopsSpeed").value = result[world].troopsSpeed;
+    document.getElementById("farmLimit").checked = result[world].farmLimit;
+    document.getElementById("farmLimitDate").value =
+      result[world].farmLimitDate;
+    document.getElementById("farmGreenA").checked = result[world].farmGreenA;
+    document.getElementById("farmYellowA").checked = result[world].farmYellowA;
+    document.getElementById("farmMaxWallA").value = result[world].farmMaxWallA;
+    document.getElementById("farmMaxDistanceA").value =
+      result[world].farmMaxDistanceA;
+    document.getElementById("farmGreenB").checked = result[world].farmGreenB;
+    document.getElementById("farmYellowB").checked = result[world].farmYellowB;
+    document.getElementById("farmMaxWallB").value = result[world].farmMaxWallB;
+    document.getElementById("farmMaxDistanceB").value =
+      result[world].farmMaxDistanceB;
+    document.getElementById("schedulerDelay").value =
+      result[world].schedulerDelay;
+    document.getElementById("schedulerTime").value =
+      result[world].schedulerTime;
+    document.getElementById("schedulerMsAdjust").value =
+      result[world].schedulerMsAdjust;
+    document.getElementById("snipDelay").value = result[world].snipDelay;
+    document.getElementById("snipTotalTime").value =
+      result[world].snipTotalTime;
+    document.getElementById("snipAttackTime").value =
+      result[world].snipAttackTime;
+    document.getElementById("snipMsAdjust").value = result[world].snipMsAdjust;
+  });
   /** Snip by canceling */
 }
 
@@ -119,6 +115,12 @@ function farmSetState(button) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  /** Load data from site */
+  chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
+    var url = tabs[0].url;
+    world = url.match(/https:\/\/(.*)\.tribal.*/i)[1];
+  });
+  /** Initialize */
   initialize();
   /** Log screen */
   chrome.tabs.executeScript({
@@ -145,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
       file: "farmer.js"
     });
   });
-  /** Atack Scheduler */
+  /** Attack Scheduler */
   document.getElementById("schedulerGo").addEventListener("click", function() {
     state.scheduler.delay = document.getElementById("schedulerDelay").value;
     state.scheduler.time = document.getElementById("schedulerTime").value;
@@ -162,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
     state.snip.action = "send";
     state.snip.delay = document.getElementById("snipDelay").value;
     state.snip.totalTime = document.getElementById("snipTotalTime").value;
-    state.snip.atackTime = document.getElementById("snipAtackTime").value;
+    state.snip.attackTime = document.getElementById("snipAttackTime").value;
     state.snip.msAdjust = document.getElementById("snipMsAdjust").value;
     setState();
     chrome.tabs.executeScript({
@@ -174,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
     state.snip.action = "return";
     state.snip.delay = document.getElementById("snipDelay").value;
     state.snip.totalTime = document.getElementById("snipTotalTime").value;
-    state.snip.atackTime = document.getElementById("snipAtackTime").value;
+    state.snip.attackTime = document.getElementById("snipAttackTime").value;
     state.snip.msAdjust = document.getElementById("snipMsAdjust").value;
     setState();
     chrome.tabs.executeScript({

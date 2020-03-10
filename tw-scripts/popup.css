@@ -14,8 +14,8 @@ body {
 
 .navbar > button {
   cursor: pointer;
-  width: 30%;
-  font-size: 15px;
+  width: 28%;
+  font-size: 12px;
   background: transparent;
   border: none;
   border-right: 1px solid #6c4824;
@@ -24,8 +24,8 @@ body {
   padding-bottom: 5px;
 }
 
-.navbar > button:last-child {
-  width: 10%;
+.navbar > button:nth-child(1n + 4) {
+  width: 8%;
   border-right: none;
   background-color: #6c4824;
   color: white;
@@ -43,6 +43,7 @@ body {
   padding: 5px;
   text-align: center;
   background: #f4e4bc;
+  width: calc(100% - 20px);
 }
 
 .function-group > h1 {
